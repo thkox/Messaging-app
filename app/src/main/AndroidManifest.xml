@@ -20,9 +20,11 @@
             android:exported="false" />
         <activity
             android:name=".SignUpActivity"
+            android:parentActivityName=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".SignInActivity"
+            android:parentActivityName=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

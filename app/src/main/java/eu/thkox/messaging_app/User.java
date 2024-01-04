@@ -9,6 +9,8 @@ public class User {
     String imageURL;
 
 
+    public User() {
+    }
     public User(String email, String nickname, String id, String imageURL) {
         this.email = email;
         this.nickname = nickname;
