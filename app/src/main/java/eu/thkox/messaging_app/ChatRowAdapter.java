@@ -37,13 +37,15 @@ public class ChatRowAdapter extends RecyclerView.Adapter<ChatRowAdapter.RowViewH
     public void onBindViewHolder(@NonNull RowViewHolder holder, int position) {
         //position of the list of chats
         Chat chat = chats.get(position);
+        // get the last message from the list of messages
+        Message message = chat.getMessages().get(chat.getMessages().size()-1);
 
         //set the image of the user
         // holder.imageViewUser.setImageResource(chats.get(position).getUser().getImage()); -> to be implemented
 
-        holder.textViewNickname.setText(chat.getUser().getNickname());
+        holder.textViewNickname.setText(message.getSender().getNickname());
         //get the last message from the list of messages
-        holder.textViewMessage.setText(chat.getMessages().get(chat.getMessages().size()-1).getMessage());
+        holder.textViewMessage.setText(message.getMessage());
     }
 
     @Override

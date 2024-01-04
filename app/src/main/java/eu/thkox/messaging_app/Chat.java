@@ -3,12 +3,20 @@ package eu.thkox.messaging_app;
 import java.util.List;
 
 public class Chat {
-    User user;
+    List<User> users;
     List<Message> messages;
 
-    public Chat(User user, List<Message> messages) {
-        this.user = user;
+    public Chat(List<User> users, List<Message> messages) {
+        this.users = users;
         this.messages = messages;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     public List<Message> getMessages() {
@@ -17,13 +25,5 @@ public class Chat {
 
     public void setMessages(List<Message> messages) {
         this.messages = messages;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 }
