@@ -8,4 +8,5 @@
     <string name="nickname">Nickname</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="message_placeholder">There is no message.</string>
 </resources>
