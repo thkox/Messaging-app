@@ -1,6 +1,7 @@
 package eu.thkox.messaging_app;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
@@ -24,6 +25,9 @@ public class ChatsActivity extends AppCompatActivity {
 
         // Set the recycler view
         recyclerViewChats = findViewById(R.id.recyclerViewChats);
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.app_toolbar);
+        setSupportActionBar(myToolbar);
 
         displayChats();
     }

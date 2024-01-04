@@ -18,4 +18,5 @@
     <string name="you_can_t_register_with_this_email_or_password">You can\'t register with this email or password</string>
     <string name="password_must_be_at_least_4_characters_long">Password must be at least 4 characters long</string>
     <string name="you_have_entered_an_invalid_email_or_password">You have entered an invalid email or password.</string>
+    <string name="search_chat_or_user">Search chat or user</string>
 </resources>

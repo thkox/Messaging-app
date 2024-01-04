@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (firebaseUser != null) {
             Intent intent = new Intent(this, ChatsActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
         }
