@@ -10,9 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.imageview.ShapeableImageView;
-import com.google.android.material.shape.Shapeable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ChatRowAdapter extends RecyclerView.Adapter<ChatRowAdapter.RowViewHolder> {
@@ -63,7 +61,7 @@ public class ChatRowAdapter extends RecyclerView.Adapter<ChatRowAdapter.RowViewH
         public RowViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewNickname = itemView.findViewById(R.id.textViewNickname);
-            textViewMessage = itemView.findViewById(R.id.textViewLastMessage);
+            textViewMessage = itemView.findViewById(R.id.textViewEmail);
             imageViewUser = itemView.findViewById(R.id.imageViewUser);
         }
     }

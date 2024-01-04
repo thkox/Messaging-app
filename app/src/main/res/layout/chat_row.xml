@@ -41,14 +41,14 @@
             android:text="@string/nickname"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/textViewLastMessage"
+            app:layout_constraintBottom_toTopOf="@+id/textViewEmail"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.034"
             app:layout_constraintStart_toEndOf="@+id/imageViewUser"
             app:layout_constraintTop_toTopOf="@+id/imageViewUser" />
 
         <TextView
-            android:id="@+id/textViewLastMessage"
+            android:id="@+id/textViewEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/message_placeholder"
