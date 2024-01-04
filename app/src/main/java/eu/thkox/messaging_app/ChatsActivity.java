@@ -13,6 +13,11 @@ import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -24,6 +29,7 @@ public class ChatsActivity extends AppCompatActivity {
 
     FirebaseAuth auth;
     FirebaseUser currentUser;
+    DatabaseReference reference;
 
     Toolbar toolbar;
 
@@ -36,10 +42,8 @@ public class ChatsActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         currentUser = auth.getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
 
-
-        // Get the chats from the database
-        //chats = DatabaseManager.getInstance(this).getChats();
 
         // Set the recycler view
         recyclerViewChats = findViewById(R.id.recyclerViewChats);
@@ -48,6 +52,24 @@ public class ChatsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         //back button
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // clear the toolbar title
+        getSupportActionBar().setTitle("");
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user = snapshot.getValue(User.class);
+                assert user != null;
+                getSupportActionBar().setTitle(String.format("Welcome back, %s", user.getNickname()));
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         displayChats();
     }
@@ -71,7 +93,7 @@ public class ChatsActivity extends AppCompatActivity {
             finish();
             return true;
         }
-        return super.onOptionsItemSelected(item);
+        return false;
     }
 
     private void displayChats(){

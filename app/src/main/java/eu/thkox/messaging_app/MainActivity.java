@@ -22,6 +22,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
+
+        buttonLogIn = findViewById(R.id.buttonLogIn);
+        buttonRegister = findViewById(R.id.buttonRegister);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if (firebaseUser != null) {
@@ -30,9 +41,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
-
-        buttonLogIn = findViewById(R.id.buttonLogIn);
-        buttonRegister = findViewById(R.id.buttonRegister);
     }
 
     public void goToSignInActivity(View view) {
