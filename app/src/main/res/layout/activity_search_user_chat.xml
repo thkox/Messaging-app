@@ -33,6 +33,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="348dp"
         android:layout_height="69dp"
+        app:cardCornerRadius="15dp"
+        app:cardPreventCornerOverlap="true"
         app:layout_constraintBottom_toBottomOf="@+id/recyclerViewUsers"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
