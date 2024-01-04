@@ -30,7 +30,11 @@ public class SearchUserChatActivity extends AppCompatActivity {
 
     RecyclerView recyclerViewUsers;
     SearchRowAdapter adapter;
+
+
     List<User> users;
+
+
     DatabaseReference reference;
     EditText searchUser;
     Toolbar toolbar;
@@ -43,7 +47,10 @@ public class SearchUserChatActivity extends AppCompatActivity {
 
         // Set the recycler view
         recyclerViewUsers = findViewById(R.id.recyclerViewUsers);
-        recyclerViewUsers.setHasFixedSize(true);
+
+        //Set the layout of the recycler view
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerViewUsers.setLayoutManager(layoutManager);
 
         toolbar = findViewById(R.id.app_toolbar_search);
         setSupportActionBar(toolbar);
