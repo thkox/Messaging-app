@@ -56,7 +56,7 @@ public class SignUpActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(nickname) || TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
             textViewSignUpError.setVisibility(TextView.VISIBLE);
             textViewSignUpError.setText(R.string.all_fields_are_required);
-        } else if (password.length() < 4) {
+        } else if (password.length() < 6) {
             textViewSignUpError.setVisibility(TextView.VISIBLE);
             textViewSignUpError.setText(R.string.password_must_be_at_least_4_characters_long);
         } else {
