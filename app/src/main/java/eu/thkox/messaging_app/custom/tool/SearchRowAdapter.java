@@ -1,4 +1,4 @@
-package eu.thkox.messaging_app;
+package eu.thkox.messaging_app.custom.tool;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+
+import eu.thkox.messaging_app.R;
+import eu.thkox.messaging_app.data.model.User;
 
 public class SearchRowAdapter  extends RecyclerView.Adapter<SearchRowAdapter.RowViewHolder> {
 
@@ -41,7 +44,7 @@ public class SearchRowAdapter  extends RecyclerView.Adapter<SearchRowAdapter.Row
 
     @Override
     public int getItemCount() {
-        return 0;
+        return users.size();
     }
 
     public class RowViewHolder extends RecyclerView.ViewHolder {

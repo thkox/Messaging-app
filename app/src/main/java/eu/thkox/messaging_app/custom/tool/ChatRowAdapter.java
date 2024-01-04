@@ -1,4 +1,4 @@
-package eu.thkox.messaging_app;
+package eu.thkox.messaging_app.custom.tool;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,6 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.List;
+
+import eu.thkox.messaging_app.R;
+import eu.thkox.messaging_app.data.model.Chat;
+import eu.thkox.messaging_app.data.model.Message;
 
 public class ChatRowAdapter extends RecyclerView.Adapter<ChatRowAdapter.RowViewHolder> {
 

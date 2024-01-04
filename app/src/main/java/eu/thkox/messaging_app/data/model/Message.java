@@ -1,4 +1,6 @@
-package eu.thkox.messaging_app;
+package eu.thkox.messaging_app.data.model;
+
+import eu.thkox.messaging_app.data.model.User;
 
 public class Message {
 

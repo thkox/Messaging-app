@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,6 +21,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
+
+import eu.thkox.messaging_app.custom.tool.ChatRowAdapter;
+import eu.thkox.messaging_app.data.model.Chat;
+import eu.thkox.messaging_app.data.model.User;
 
 public class ChatsActivity extends AppCompatActivity {
 
@@ -99,5 +104,13 @@ public class ChatsActivity extends AppCompatActivity {
     private void displayChats(){
         adapter = new ChatRowAdapter(this, chats);
         recyclerViewChats.setAdapter(adapter);
+    }
+
+    public void searchUserChat(View view) {
+        Intent intent = new Intent(ChatsActivity.this, SearchUserChatActivity.class);
+        // these flags clear the activity stack and start a new activity
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 }

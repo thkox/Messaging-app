@@ -6,19 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".SearchUserChatActivity">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/materialToolbarSeachUser"
-        android:layout_width="412dp"
-        android:layout_height="61dp"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/app_toolbar_search"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewUsers"
@@ -28,8 +22,7 @@
         android:paddingTop="?attr/actionBarSize"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialToolbarSeachUser" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="348dp"
@@ -40,7 +33,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialToolbarSeachUser"
+        app:layout_constraintTop_toBottomOf="@+id/app_toolbar_search"
         app:layout_constraintVertical_bias="0.951">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -48,7 +41,7 @@
             android:layout_height="match_parent">
 
             <EditText
-                android:id="@+id/editTextSearText"
+                android:id="@+id/editTextSearchText"
                 android:layout_width="248dp"
                 android:layout_height="51dp"
                 android:ems="10"
@@ -66,31 +59,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="true"
+                android:onClick="searchUsers"
                 android:tooltipText="Search"
-                app:layout_constraintBottom_toBottomOf="@+id/editTextSearText"
+                app:layout_constraintBottom_toBottomOf="@+id/editTextSearchText"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.768"
-                app:layout_constraintStart_toEndOf="@+id/editTextSearText"
-                app:layout_constraintTop_toTopOf="@+id/editTextSearText"
+                app:layout_constraintStart_toEndOf="@+id/editTextSearchText"
+                app:layout_constraintTop_toTopOf="@+id/editTextSearchText"
                 app:srcCompat="?android:attr/actionModeWebSearchDrawable" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
-
-    <TextView
-        android:id="@+id/textViewSearchUserTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="19dp"
-        android:layout_marginBottom="23dp"
-        android:text="@string/search_user"
-        android:textColor="@android:color/white"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/materialToolbarSeachUser"
-        app:layout_constraintEnd_toEndOf="@+id/materialToolbarSeachUser"
-        app:layout_constraintStart_toStartOf="@+id/materialToolbarSeachUser"
-        app:layout_constraintTop_toTopOf="@+id/materialToolbarSeachUser" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
