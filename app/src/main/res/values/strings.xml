@@ -11,4 +11,8 @@
     <string name="message_placeholder">There is no message.</string>
     <string name="search_user">Search a user</string>
     <string name="type_a_nickname">Type a nickname or email</string>
+    <string name="sign_up_error">There was an error,\n please try again later</string>
+    <string name="all_fields_are_required">All fields are required</string>
+    <string name="you_can_t_register_with_this_email_or_password">You can\'t register with this email or password</string>
+    <string name="password_must_be_at_least_4_characters_long">Password must be at least 4 characters long</string>
 </resources>
