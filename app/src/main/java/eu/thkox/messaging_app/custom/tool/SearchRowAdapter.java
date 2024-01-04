@@ -49,8 +49,8 @@ public class SearchRowAdapter  extends RecyclerView.Adapter<SearchRowAdapter.Row
 
     public class RowViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewNickname;
-        TextView textViewEmail;
+        public TextView textViewNickname;
+        public TextView textViewEmail;
 
         public RowViewHolder(@NonNull View itemView) {
             super(itemView);

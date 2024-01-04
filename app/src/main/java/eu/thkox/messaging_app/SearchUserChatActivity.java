@@ -3,6 +3,7 @@ package eu.thkox.messaging_app;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
@@ -11,6 +12,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,18 +28,12 @@ import eu.thkox.messaging_app.data.model.User;
 
 public class SearchUserChatActivity extends AppCompatActivity {
 
-
     RecyclerView recyclerViewUsers;
     SearchRowAdapter adapter;
-
     List<User> users;
-
     DatabaseReference reference;
-
     EditText searchUser;
-
     Toolbar toolbar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,55 +41,61 @@ public class SearchUserChatActivity extends AppCompatActivity {
 
         users = new ArrayList<>();
 
+        // Set the recycler view
+        recyclerViewUsers = findViewById(R.id.recyclerViewUsers);
+        recyclerViewUsers.setHasFixedSize(true);
+
         toolbar = findViewById(R.id.app_toolbar_search);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.search_chat_or_user);
 
         // Get the available users reference from the database
-        reference = FirebaseDatabase.getInstance().getReference().child("Users");
+        reference = FirebaseDatabase.getInstance().getReference("Users");
 
         // Get the search user text view
         searchUser = findViewById(R.id.editTextSearchText);
 
-
-        // Set the recycler view
-        recyclerViewUsers = findViewById(R.id.recyclerViewUsers);
-
-        //displayUsers();
-    }
-
-
-
-    public void displayUsers(){
-        adapter = new SearchRowAdapter(this, users);
-        recyclerViewUsers.setAdapter(adapter);
     }
 
     public void searchUsers(View view) {
         String nickname = searchUser.getText().toString();
-        if(!TextUtils.isEmpty(nickname)){
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
+        if(!TextUtils.isEmpty(nickname)){
             reference.orderByChild("nickname").equalTo(nickname).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if(snapshot.exists()){
-                        if (users != null){
-                            users.clear();
-                        }
+                        users.clear();
                         for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                             User user = dataSnapshot.getValue(User.class);
-                            users.add(user);
+
+                            assert user != null;
+                            assert firebaseUser != null;
+
+                            if (!user.getId().equals(firebaseUser.getUid())){
+                                users.add(user);
+                            } else {
+                                Toast.makeText(SearchUserChatActivity.this, "You can't chat with yourself", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                        Toast.makeText(SearchUserChatActivity.this, "User found", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(SearchUserChatActivity.this, users.get(1).getEmail(), Toast.LENGTH_SHORT).show();
+
+
                         displayUsers();
                     }
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-
                 }
             });
+        } else {
+            Toast.makeText(this, "Please enter a nickname", Toast.LENGTH_SHORT).show();
         }
+    }
+    private void displayUsers(){
+        adapter = new SearchRowAdapter(this, users);
+        recyclerViewUsers.setAdapter(adapter);
     }
 }
