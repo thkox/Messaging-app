@@ -9,4 +9,5 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="message_placeholder">There is no message.</string>
+    <string name="search_chat">Search chat...</string>
 </resources>
