@@ -39,7 +39,7 @@ public class SignUpActivity extends AppCompatActivity {
         editTextNickname = findViewById(R.id.editTextSignUpTextNickname);
         editTextEmail = findViewById(R.id.editTextSignUpTextEmailAddress);
         editTextPassword = findViewById(R.id.editTextSignUpTextPassword);
-        textViewSignUpError = findViewById(R.id.textViewSignUpError);
+        textViewSignUpError = findViewById(R.id.textViewSignInError);
 
         textViewSignUpError.setVisibility(TextView.INVISIBLE);
 
@@ -65,36 +65,30 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void registerUser(String nickname, String email, String password) {
-        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    FirebaseUser firebaseUser = auth.getCurrentUser();
-                    assert firebaseUser != null;
-                    String userid = firebaseUser.getUid();
+        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                FirebaseUser firebaseUser = auth.getCurrentUser();
+                assert firebaseUser != null;
+                String userid = firebaseUser.getUid();
 
-                    reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
+                reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
-                    HashMap<String, String> hashMap = new HashMap<>();
-                    hashMap.put("id", userid);
-                    hashMap.put("nickname", nickname);
-                    hashMap.put("imageURL", "default");
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put("id", userid);
+                hashMap.put("nickname", nickname);
+                hashMap.put("imageURL", "default");
 
-                    reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                Intent intent = new Intent(SignUpActivity.this, ChatsActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(intent);
-                                finish();
-                            }
-                        }
-                    });
-                }else{
-                    textViewSignUpError.setVisibility(TextView.VISIBLE);
-                    textViewSignUpError.setText(R.string.you_can_t_register_with_this_email_or_password);
-                }
+                reference.setValue(hashMap).addOnCompleteListener(task1 -> {
+                    if(task1.isSuccessful()){
+                        Intent intent = new Intent(SignUpActivity.this, ChatsActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+            }else{
+                textViewSignUpError.setVisibility(TextView.VISIBLE);
+                textViewSignUpError.setText(R.string.you_can_t_register_with_this_email_or_password);
             }
         });
     }
