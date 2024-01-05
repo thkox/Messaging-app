@@ -29,17 +29,13 @@ import eu.thkox.messaging_app.data.model.Chat;
 import eu.thkox.messaging_app.data.model.User;
 
 public class ChatActivity extends AppCompatActivity {
-
     FirebaseUser firebaseUser;
-    DatabaseReference reference1;
-
+    DatabaseReference reference;
+    Toolbar toolbar;
     Intent intent;
-
     EditText messageText;
     RecyclerView recyclerView;
-
     FloatingActionButton sendButton;
-
     MessageAdapter messageAdapter;
     List<Chat> chatMessages;
     User receiver;
@@ -49,45 +45,32 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        Toolbar toolbar = findViewById(R.id.app_toolbar_chat);
+        messageText = findViewById(R.id.editTextMessageText);
+        sendButton = findViewById(R.id.floatingActionButtonSendMessage);
+
+        toolbar = findViewById(R.id.app_toolbar_chat);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
-        //back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
+        //set the layout of the recycler view
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView = findViewById(R.id.recyclerViewChat);
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-
-        messageText = findViewById(R.id.editTextMessageText);
-        sendButton = findViewById(R.id.floatingActionButtonSendMessage);
-
         chatMessages = new ArrayList<>();
 
         intent = getIntent();
-
         String userid = intent.getStringExtra("userid");
-
-        // get the user id from the firebase
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        reference1 = FirebaseDatabase.getInstance().getReference("Users").child(userid);
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
-        reference1.addValueEventListener(new ValueEventListener() {
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                //get the user from the database
                 receiver = snapshot.getValue(User.class);
-                //set the title of the toolbar to the nickname of the user
                 getSupportActionBar().setTitle(receiver.getNickname());
-
                 //load the messages from the database
                 loadMessagesFromDatabase(firebaseUser.getUid(), userid);
             }
@@ -97,19 +80,16 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
 
     public void sendMessageToDatabase(View view) {
-
         String message = messageText.getText().toString();
         int timestamp = (int) (System.currentTimeMillis() / 1000);
 
         if (!message.equals("")) {
             sendMessage(firebaseUser.getUid(), receiver.getId(), message, timestamp);
         }
-
         messageText.setText("");
     }
 
@@ -124,24 +104,23 @@ public class ChatActivity extends AppCompatActivity {
         hashMap.put("timestamp", timestamp);
 
         reference.child("Chats").push().setValue(hashMap);
-
     }
 
     private void loadMessagesFromDatabase(String senderId, String receiverId) {
         //get the reference of the database
-        reference1 = FirebaseDatabase.getInstance().getReference("Chats");
+        reference = FirebaseDatabase.getInstance().getReference("Chats");
 
-        reference1.addValueEventListener(new ValueEventListener() {
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 chatMessages.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Chat chat = dataSnapshot.getValue(Chat.class);
                     assert chat != null;
-                    if (chat.getReceiverId().equals(receiverId) && chat.getSenderId().equals(senderId) ||
-                            chat.getReceiverId().equals(senderId) && chat.getSenderId().equals(receiverId)) {
-                        chatMessages.add(chat);
-                    }
+//                    if (chat.getReceiverId().equals(receiverId) && chat.getSenderId().equals(senderId) ||
+//                            chat.getReceiverId().equals(senderId) && chat.getSenderId().equals(receiverId)) {
+//                        chatMessages.add(chat);
+//                    }
                     messageAdapter = new MessageAdapter(ChatActivity.this, chatMessages);
                     recyclerView.setAdapter(messageAdapter);
                 }

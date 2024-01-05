@@ -15,11 +15,8 @@ import com.google.firebase.auth.FirebaseAuth;
 public class SignInActivity extends AppCompatActivity {
 
     EditText editTextEmail, editTextPassword;
-
     TextView textViewSignInError;
     Button buttonSignIn;
-
-    FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +30,6 @@ public class SignInActivity extends AppCompatActivity {
         textViewSignInError.setVisibility(TextView.INVISIBLE);
 
         buttonSignIn = findViewById(R.id.buttonSignIn);
-
-        auth = FirebaseAuth.getInstance();
     }
 
     public void signInUser(View view) {
@@ -51,13 +46,10 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void signIn(String email, String password) {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                Intent intent = new Intent(SignInActivity.this, ChatsActivity.class);
-                // these flags clear the activity stack and start a new activity
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                finish();
+                ActivityUtils.goToChatsActivity(SignInActivity.this);
             } else {
                 textViewSignInError.setVisibility(TextView.VISIBLE);
                 textViewSignInError.setText(R.string.you_have_entered_an_invalid_email_or_password);

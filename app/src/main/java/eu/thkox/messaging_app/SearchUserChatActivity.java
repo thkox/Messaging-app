@@ -29,14 +29,9 @@ import eu.thkox.messaging_app.custom.tool.SearchRowAdapter;
 import eu.thkox.messaging_app.data.model.User;
 
 public class SearchUserChatActivity extends AppCompatActivity {
-
     RecyclerView recyclerViewUsers;
     SearchRowAdapter adapter;
-
-
     List<User> users;
-
-
     DatabaseReference reference;
     EditText searchUser;
     Toolbar toolbar;
@@ -46,26 +41,22 @@ public class SearchUserChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_user_chat);
 
         users = new ArrayList<>();
-
-        // Set the recycler view
         recyclerViewUsers = findViewById(R.id.recyclerViewUsers);
+        searchUser = findViewById(R.id.editTextSearchText);
+
 
         //Set the layout of the recycler view
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerViewUsers.setLayoutManager(layoutManager);
 
+        // Set the toolbar
         toolbar = findViewById(R.id.app_toolbar_search);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.search_chat_or_user);
-        //back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // Get the available users reference from the database
+        // Set the firebase reference
         reference = FirebaseDatabase.getInstance().getReference("Users");
-
-        // Get the search user text view
-        searchUser = findViewById(R.id.editTextSearchText);
-
     }
 
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -76,7 +67,6 @@ public class SearchUserChatActivity extends AppCompatActivity {
             launchChatsActivity(); // This will finish the current activity and go back
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -100,13 +90,9 @@ public class SearchUserChatActivity extends AppCompatActivity {
                                 users.add(user);
                             }
                         }
-                        //Toast.makeText(SearchUserChatActivity.this, users.get(1).getEmail(), Toast.LENGTH_SHORT).show();
-
-
                         displayUsers();
                     }
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                 }

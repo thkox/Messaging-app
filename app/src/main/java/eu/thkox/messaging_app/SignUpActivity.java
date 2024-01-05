@@ -21,14 +21,13 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 
+import eu.thkox.messaging_app.data.model.User;
+
 public class SignUpActivity extends AppCompatActivity {
-
     EditText editTextNickname, editTextEmail, editTextPassword;
-
     TextView textViewSignUpError;
     Button buttonSignUp;
 
-    FirebaseAuth auth;
     DatabaseReference reference;
 
     @Override
@@ -40,12 +39,9 @@ public class SignUpActivity extends AppCompatActivity {
         editTextEmail = findViewById(R.id.editTextSignUpTextEmailAddress);
         editTextPassword = findViewById(R.id.editTextSignUpTextPassword);
         textViewSignUpError = findViewById(R.id.textViewSignInError);
-
-        textViewSignUpError.setVisibility(TextView.INVISIBLE);
-
         buttonSignUp = findViewById(R.id.buttonSignUp);
 
-        auth = FirebaseAuth.getInstance();
+        textViewSignUpError.setVisibility(TextView.INVISIBLE);
     }
 
     public void signUpUser(View view) {
@@ -65,6 +61,8 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void registerUser(String nickname, String email, String password) {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if(task.isSuccessful()){
                 FirebaseUser firebaseUser = auth.getCurrentUser();
@@ -73,18 +71,11 @@ public class SignUpActivity extends AppCompatActivity {
 
                 reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
-                HashMap<String, String> hashMap = new HashMap<>();
-                hashMap.put("id", userid);
-                hashMap.put("nickname", nickname);
-                hashMap.put("email", email);
-                hashMap.put("imageURL", "default");
+                User newUser = new User(userid, nickname, email, "default");
 
-                reference.setValue(hashMap).addOnCompleteListener(task1 -> {
+                reference.setValue(newUser).addOnCompleteListener(task1 -> {
                     if(task1.isSuccessful()){
-                        Intent intent = new Intent(SignUpActivity.this, ChatsActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                        finish();
+                        ActivityUtils.goToChatsActivity(SignUpActivity.this);
                     }
                 });
             }else{

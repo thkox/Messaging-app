@@ -31,34 +31,26 @@ public class ChatsActivity extends AppCompatActivity {
     RecyclerView recyclerViewChats;
     ChatRowAdapter adapter;
     List<Chat> chats;
-
     FirebaseAuth auth;
     FirebaseUser currentUser;
     DatabaseReference reference;
-
-    Toolbar toolbar;
-
-    ImageView imageViewProfilePicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chats);
 
-        auth = FirebaseAuth.getInstance();
+        //Firebase
+        FirebaseAuth auth = FirebaseAuth.getInstance();
         currentUser = auth.getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
-
 
         // Set the recycler view
         recyclerViewChats = findViewById(R.id.recyclerViewChats);
 
-        toolbar = findViewById(R.id.app_toolbar);
+        // Set the toolbar
+        Toolbar toolbar = findViewById(R.id.app_toolbar);
         setSupportActionBar(toolbar);
-        //back button
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        // clear the toolbar title
         getSupportActionBar().setTitle("");
 
         reference.addValueEventListener(new ValueEventListener() {
@@ -67,7 +59,6 @@ public class ChatsActivity extends AppCompatActivity {
                 User user = snapshot.getValue(User.class);
                 assert user != null;
                 getSupportActionBar().setTitle(String.format("Welcome back, %s", user.getNickname()));
-
             }
 
             @Override
@@ -75,7 +66,6 @@ public class ChatsActivity extends AppCompatActivity {
 
             }
         });
-
         displayChats();
     }
 
@@ -91,11 +81,9 @@ public class ChatsActivity extends AppCompatActivity {
 
         if (id == R.id.action_logout) {
             // Perform logout
+            FirebaseAuth auth = FirebaseAuth.getInstance();
             auth.signOut();
-            Intent intent = new Intent(ChatsActivity.this, MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            finish();
+            ActivityUtils.goToMainActivity(ChatsActivity.this);
             return true;
         }
         return false;
@@ -107,10 +95,6 @@ public class ChatsActivity extends AppCompatActivity {
     }
 
     public void searchUserChat(View view) {
-        Intent intent = new Intent(ChatsActivity.this, SearchUserChatActivity.class);
-        // these flags clear the activity stack and start a new activity
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();
+        ActivityUtils.goToSearchUserChatActivity(ChatsActivity.this);
     }
 }
