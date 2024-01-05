@@ -13,20 +13,23 @@
         android:theme="@style/Theme.Messagingapp"
         tools:targetApi="31">
         <activity
-            android:name=".SearchUserChatActivity"
-            android:parentActivityName=".ChatsActivity"
+            android:name=".ChatActivity"
             android:exported="false" />
+        <activity
+            android:name=".SearchUserChatActivity"
+            android:exported="false"
+            android:parentActivityName=".ChatsActivity" />
         <activity
             android:name=".ChatsActivity"
             android:exported="false" />
         <activity
             android:name=".SignUpActivity"
-            android:parentActivityName=".MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".SignInActivity"
-            android:parentActivityName=".MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

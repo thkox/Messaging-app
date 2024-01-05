@@ -1,6 +1,7 @@
 package eu.thkox.messaging_app.custom.tool;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import eu.thkox.messaging_app.ChatActivity;
 import eu.thkox.messaging_app.R;
 import eu.thkox.messaging_app.data.model.User;
 
@@ -40,6 +42,15 @@ public class SearchRowAdapter  extends RecyclerView.Adapter<SearchRowAdapter.Row
 
         holder.textViewNickname.setText(user.getNickname());
         holder.textViewEmail.setText(user.getEmail());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ChatActivity.class);
+                intent.putExtra("userid", user.getId());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
