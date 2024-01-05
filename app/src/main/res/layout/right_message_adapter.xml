@@ -16,7 +16,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="90dp"
+            android:layout_height="wrap_content"
             android:padding="12.dp">
 
             <androidx.cardview.widget.CardView
@@ -35,17 +35,17 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/textViewSenderMessage"
+                        android:id="@+id/textViewMessage"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/sender_message_here"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                        android:textSize="18sp"
                         android:paddingLeft="16dp"
                         android:paddingTop="8dp"
                         android:paddingRight="16dp"
                         android:paddingBottom="8dp"
+                        android:text="@string/sender_message_here"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"

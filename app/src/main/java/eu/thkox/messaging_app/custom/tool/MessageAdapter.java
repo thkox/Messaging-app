@@ -1,7 +1,6 @@
 package eu.thkox.messaging_app.custom.tool;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +14,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
-import eu.thkox.messaging_app.ChatActivity;
 import eu.thkox.messaging_app.R;
 import eu.thkox.messaging_app.data.model.Chat;
-import eu.thkox.messaging_app.data.model.User;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.RowViewHolder> {
 
@@ -39,13 +36,19 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.RowViewH
     @Override
     public MessageAdapter.RowViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.search_row, parent, false);
-        return new MessageAdapter.RowViewHolder(view);
+        View view;
+        if (viewType == sender_message) {
+            view = inflater.inflate(R.layout.right_message_adapter, parent, false);
+        } else {
+            view = inflater.inflate(R.layout.left_message_adapter, parent, false);
+        }
+        return new RowViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MessageAdapter.RowViewHolder holder, int position) {
-
+        Chat chat = chatMessages.get(position);
+        holder.textViewMessage.setText(chat.getText());
 
     }
 
@@ -60,7 +63,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.RowViewH
 
         public RowViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewMessage = itemView.findViewById(R.id.textViewNickname);
+            textViewMessage = itemView.findViewById(R.id.textViewMessage);
         }
     }
 

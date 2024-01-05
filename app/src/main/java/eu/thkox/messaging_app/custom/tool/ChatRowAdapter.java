@@ -15,7 +15,6 @@ import java.util.List;
 
 import eu.thkox.messaging_app.R;
 import eu.thkox.messaging_app.data.model.Chat;
-import eu.thkox.messaging_app.data.model.Message;
 
 public class ChatRowAdapter extends RecyclerView.Adapter<ChatRowAdapter.RowViewHolder> {
 
@@ -40,14 +39,14 @@ public class ChatRowAdapter extends RecyclerView.Adapter<ChatRowAdapter.RowViewH
         //position of the list of chats
         Chat chat = chats.get(position);
         // get the last message from the list of messages
-        Message message = chat.getMessages().get(chat.getMessages().size()-1);
+        String message = chat.getText();
 
         //set the image of the user
         // holder.imageViewUser.setImageResource(chats.get(position).getUser().getImage()); -> to be implemented
 
-        holder.textViewNickname.setText(message.getSenderId());
+        //holder.textViewNickname.setText(.getSenderId());
         //get the last message from the list of messages
-        holder.textViewMessage.setText(message.getText());
+        //holder.textViewMessage.setText(message.getText());
     }
 
     @Override

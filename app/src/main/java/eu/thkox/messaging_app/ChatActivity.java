@@ -3,6 +3,8 @@ package eu.thkox.messaging_app;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,22 +20,28 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-import eu.thkox.messaging_app.data.model.Message;
+import eu.thkox.messaging_app.custom.tool.MessageAdapter;
+import eu.thkox.messaging_app.data.model.Chat;
 import eu.thkox.messaging_app.data.model.User;
 
 public class ChatActivity extends AppCompatActivity {
 
     FirebaseUser firebaseUser;
-    DatabaseReference reference;
+    DatabaseReference reference1;
 
     Intent intent;
 
     EditText messageText;
+    RecyclerView recyclerView;
 
     FloatingActionButton sendButton;
 
+    MessageAdapter messageAdapter;
+    List<Chat> chatMessages;
     User receiver;
 
     @Override
@@ -53,8 +61,16 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView = findViewById(R.id.recyclerViewChat);
+        linearLayoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+
         messageText = findViewById(R.id.editTextMessageText);
         sendButton = findViewById(R.id.floatingActionButtonSendMessage);
+
+        chatMessages = new ArrayList<>();
 
         intent = getIntent();
 
@@ -62,15 +78,18 @@ public class ChatActivity extends AppCompatActivity {
 
         // get the user id from the firebase
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
+        reference1 = FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
-        reference.addValueEventListener(new ValueEventListener() {
+        reference1.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 //get the user from the database
                 receiver = snapshot.getValue(User.class);
                 //set the title of the toolbar to the nickname of the user
                 getSupportActionBar().setTitle(receiver.getNickname());
+
+                //load the messages from the database
+                loadMessagesFromDatabase(firebaseUser.getUid(), userid);
             }
 
             @Override
@@ -78,31 +97,9 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-
-    private void sendMessage(String senderid, String receiverid, String text, int timestamp) {
-        //get the reference of the database
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-
-//        //create a new message
-//        Message message = new Message(timestamp, senderid, intent.getStringExtra("userid"), text);
-//
-//        //get the chat id
-//        String chatid = intent.getStringExtra("chatid");
-//
-//        //add the message to the database
-//        reference.child("Chats").child(chatid).child("Messages").push().setValue(message);
-
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("senderid", senderid);
-        hashMap.put("receiverid", intent.getStringExtra("userid"));
-        hashMap.put("text", text);
-        hashMap.put("timestamp", timestamp);
-
-        reference.child("Chats").push().setValue(hashMap);
 
     }
+
 
     public void sendMessageToDatabase(View view) {
 
@@ -115,4 +112,46 @@ public class ChatActivity extends AppCompatActivity {
 
         messageText.setText("");
     }
+
+    private void sendMessage(String senderid, String receiverid, String text, int timestamp) {
+        //get the reference of the database
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("senderId", senderid);
+        hashMap.put("receiverId", intent.getStringExtra("userid"));
+        hashMap.put("text", text);
+        hashMap.put("timestamp", timestamp);
+
+        reference.child("Chats").push().setValue(hashMap);
+
+    }
+
+    private void loadMessagesFromDatabase(String senderId, String receiverId) {
+        //get the reference of the database
+        reference1 = FirebaseDatabase.getInstance().getReference("Chats");
+
+        reference1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                chatMessages.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Chat chat = dataSnapshot.getValue(Chat.class);
+                    assert chat != null;
+                    if (chat.getReceiverId().equals(receiverId) && chat.getSenderId().equals(senderId) ||
+                            chat.getReceiverId().equals(senderId) && chat.getSenderId().equals(receiverId)) {
+                        chatMessages.add(chat);
+                    }
+                    messageAdapter = new MessageAdapter(ChatActivity.this, chatMessages);
+                    recyclerView.setAdapter(messageAdapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
 }

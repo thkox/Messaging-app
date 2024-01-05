@@ -1,17 +1,36 @@
 package eu.thkox.messaging_app.data.model;
 
-import java.util.List;
-
 public class Chat {
 
     String senderId;
     String receiverId;
-    String message;
+    String text;
+
+    int timestamp;
+
+
+    public Chat() {
+    }
+
+    public int getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(int timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public Chat(String senderId, String receiverId, String text, int timestamp) {
+        this.senderId = senderId;
+        this.receiverId = receiverId;
+        this.text = text;
+        this.timestamp = timestamp;
+    }
 
     public Chat(String senderId, String receiverId, String message) {
         this.senderId = senderId;
         this.receiverId = receiverId;
-        this.message = message;
+        this.text = message;
     }
 
     public String getSenderId() {
@@ -30,11 +49,11 @@ public class Chat {
         this.receiverId = receiverId;
     }
 
-    public String getMessage() {
-        return message;
+    public String getText() {
+        return text;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setText(String text) {
+        this.text = text;
     }
 }
