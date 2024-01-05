@@ -17,7 +17,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="81dp"
+            android:layout_height="90dp"
             android:padding="12.dp">
 
             <com.google.android.material.imageview.ShapeableImageView
