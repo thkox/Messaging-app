@@ -3,27 +3,38 @@ package eu.thkox.messaging_app.data.model;
 import java.util.List;
 
 public class Chat {
-    List<User> users;
-    List<Message> messages;
 
-    public Chat(List<User> users, List<Message> messages) {
-        this.users = users;
-        this.messages = messages;
+    String senderId;
+    String receiverId;
+    String message;
+
+    public Chat(String senderId, String receiverId, String message) {
+        this.senderId = senderId;
+        this.receiverId = receiverId;
+        this.message = message;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public String getSenderId() {
+        return senderId;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setSenderId(String senderId) {
+        this.senderId = senderId;
     }
 
-    public List<Message> getMessages() {
-        return messages;
+    public String getReceiverId() {
+        return receiverId;
     }
 
-    public void setMessages(List<Message> messages) {
-        this.messages = messages;
+    public void setReceiverId(String receiverId) {
+        this.receiverId = receiverId;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

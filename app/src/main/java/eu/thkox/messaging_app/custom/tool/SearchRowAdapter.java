@@ -16,7 +16,7 @@ import eu.thkox.messaging_app.ChatActivity;
 import eu.thkox.messaging_app.R;
 import eu.thkox.messaging_app.data.model.User;
 
-public class SearchRowAdapter  extends RecyclerView.Adapter<SearchRowAdapter.RowViewHolder> {
+public class SearchRowAdapter extends RecyclerView.Adapter<SearchRowAdapter.RowViewHolder> {
 
     Context context;
 
