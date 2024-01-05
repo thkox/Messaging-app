@@ -6,8 +6,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -55,6 +57,8 @@ public class SearchUserChatActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.app_toolbar_search);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.search_chat_or_user);
+        //back button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Get the available users reference from the database
         reference = FirebaseDatabase.getInstance().getReference("Users");
@@ -62,6 +66,18 @@ public class SearchUserChatActivity extends AppCompatActivity {
         // Get the search user text view
         searchUser = findViewById(R.id.editTextSearchText);
 
+    }
+
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            // Handle the back button in the toolbar
+            launchChatsActivity(); // This will finish the current activity and go back
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void searchUsers(View view) {
@@ -104,5 +120,12 @@ public class SearchUserChatActivity extends AppCompatActivity {
     private void displayUsers(){
         adapter = new SearchRowAdapter(this, users);
         recyclerViewUsers.setAdapter(adapter);
+    }
+
+    private void launchChatsActivity() {
+        Intent intent = new Intent(SearchUserChatActivity.this, ChatsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 }
