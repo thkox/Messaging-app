@@ -20,4 +20,6 @@
     <string name="you_have_entered_an_invalid_email_or_password">You have entered an invalid email or password.</string>
     <string name="search_chat_or_user">Search chat or user</string>
     <string name="logout">Logout</string>
+    <string name="sent_a_message">Sent a message...</string>
+    <string name="sender_message_here">[Sender Message Here]</string>
 </resources>

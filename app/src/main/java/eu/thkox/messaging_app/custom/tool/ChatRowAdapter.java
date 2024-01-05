@@ -45,9 +45,9 @@ public class ChatRowAdapter extends RecyclerView.Adapter<ChatRowAdapter.RowViewH
         //set the image of the user
         // holder.imageViewUser.setImageResource(chats.get(position).getUser().getImage()); -> to be implemented
 
-        holder.textViewNickname.setText(message.getSender().getNickname());
+        holder.textViewNickname.setText(message.getSenderId());
         //get the last message from the list of messages
-        holder.textViewMessage.setText(message.getMessage());
+        holder.textViewMessage.setText(message.getText());
     }
 
     @Override
@@ -66,7 +66,7 @@ public class ChatRowAdapter extends RecyclerView.Adapter<ChatRowAdapter.RowViewH
             super(itemView);
             textViewNickname = itemView.findViewById(R.id.textViewNickname);
             textViewMessage = itemView.findViewById(R.id.textViewEmail);
-            imageViewUser = itemView.findViewById(R.id.imageViewUser);
+            imageViewUser = itemView.findViewById(R.id.imageViewSender);
         }
     }
 }

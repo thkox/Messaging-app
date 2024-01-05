@@ -5,15 +5,13 @@ import eu.thkox.messaging_app.data.model.User;
 public class Message {
 
     int timestamp;
-    User sender;
+    String senderId;
+    String receiverId;
     String text;
 
-    public Message(int timestamp, User sender, String text) {
-        this.timestamp = timestamp;
-        this.sender = sender;
-        this.text = text;
-    }
+    public Message() {
 
+    }
     public int getTimestamp() {
         return timestamp;
     }
@@ -22,19 +20,34 @@ public class Message {
         this.timestamp = timestamp;
     }
 
-    public User getSender() {
-        return sender;
+    public String getSenderId() {
+        return senderId;
     }
 
-    public void setSender(User sender) {
-        this.sender = sender;
+    public void setSenderId(String senderId) {
+        this.senderId = senderId;
     }
 
-    public String getMessage() {
+    public String getReceiverId() {
+        return receiverId;
+    }
+
+    public void setReceiverId(String receiverId) {
+        this.receiverId = receiverId;
+    }
+
+    public String getText() {
         return text;
     }
 
-    public void setMessage(String text) {
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public Message(int timestamp, String senderId, String receiverId, String text) {
+        this.timestamp = timestamp;
+        this.senderId = senderId;
+        this.receiverId = receiverId;
         this.text = text;
     }
 }
