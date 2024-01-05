@@ -98,8 +98,6 @@ public class SearchUserChatActivity extends AppCompatActivity {
 
                             if (!user.getId().equals(firebaseUser.getUid())){
                                 users.add(user);
-                            } else {
-                                Toast.makeText(SearchUserChatActivity.this, "You can't chat with yourself", Toast.LENGTH_SHORT).show();
                             }
                         }
                         //Toast.makeText(SearchUserChatActivity.this, users.get(1).getEmail(), Toast.LENGTH_SHORT).show();
