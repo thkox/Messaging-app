@@ -16,6 +16,7 @@ import java.util.List;
 
 import eu.thkox.messaging_app.R;
 import eu.thkox.messaging_app.data.model.Chat;
+import eu.thkox.messaging_app.data.model.Message;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.RowViewHolder> {
 
@@ -23,11 +24,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.RowViewH
     int receiver_message = 1;
     Context context;
 
-    List<Chat> chatMessages;
+    List<Message> chatMessages;
 
     FirebaseUser firebaseUser;
 
-    public MessageAdapter (Context context, List<Chat> chatMessages) {
+    public MessageAdapter (Context context, List<Message> chatMessages) {
         this.context = context;
         this.chatMessages = chatMessages;
     }
@@ -47,8 +48,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.RowViewH
 
     @Override
     public void onBindViewHolder(@NonNull MessageAdapter.RowViewHolder holder, int position) {
-        Chat chat = chatMessages.get(position);
-        //holder.textViewMessage.setText(chat.getText());
+        Message message = chatMessages.get(position);
+        holder.textViewMessage.setText(message.getText());
 
     }
 
@@ -70,11 +71,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.RowViewH
     @Override
     public int getItemViewType(int position) {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-//        if (chatMessages.get(position).getSenderId().equals(firebaseUser.getUid())) {
-//            return sender_message;
-//        } else {
-//            return receiver_message;
-//        }
-        return 0;
+        if (chatMessages.get(position).getSenderId().equals(firebaseUser.getUid())) {
+            return sender_message;
+        } else {
+            return receiver_message;
+        }
     }
 }

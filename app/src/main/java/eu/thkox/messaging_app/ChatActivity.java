@@ -41,7 +41,7 @@ public class ChatActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     FloatingActionButton sendButton;
     MessageAdapter messageAdapter;
-    List<Chat> chatMessages;
+    List<Message> chatMessages;
     User receiver;
 
     @Override
@@ -117,30 +117,32 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void loadMessagesFromDatabase(String senderId, String receiverId) {
+        String chatId = generateChatId(senderId, receiverId);
+
         //get the reference of the database
-//        reference = FirebaseDatabase.getInstance().getReference("Chats");
-//
-//        reference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                chatMessages.clear();
-//                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-//                    Chat chat = dataSnapshot.getValue(Chat.class);
-//                    assert chat != null;
-//                    if (chat.getReceiverId().equals(receiverId) && chat.getSenderId().equals(senderId) ||
-//                            chat.getReceiverId().equals(senderId) && chat.getSenderId().equals(receiverId)) {
-//                        chatMessages.add(chat);
-//                    }
-//                    messageAdapter = new MessageAdapter(ChatActivity.this, chatMessages);
-//                    recyclerView.setAdapter(messageAdapter);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
+        reference = FirebaseDatabase.getInstance().getReference("Chats").child(chatId).child("messages");
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                chatMessages.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Message message = dataSnapshot.getValue(Message.class);
+                    assert message != null;
+                    if (message.getReceiverId().equals(receiverId) && message.getSenderId().equals(senderId) ||
+                            message.getReceiverId().equals(senderId) && message.getSenderId().equals(receiverId)) {
+                        chatMessages.add(message);
+                    }
+                    messageAdapter = new MessageAdapter(ChatActivity.this, chatMessages);
+                    recyclerView.setAdapter(messageAdapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
 }
