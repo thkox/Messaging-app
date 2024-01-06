@@ -1,5 +1,8 @@
 package eu.thkox.messaging_app.activity;
 
+import static eu.thkox.messaging_app.utils.FirebaseUtils.getTheReferenceUser;
+import static eu.thkox.messaging_app.utils.FirebaseUtils.logOutUser;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -44,7 +47,7 @@ public class ChatsActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
 
         //Firebase
-        DatabaseReference referenceUser = FirebaseUtils.getTheReferenceUser();
+        DatabaseReference referenceUser = getTheReferenceUser();
         referenceUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -72,7 +75,7 @@ public class ChatsActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_logout) {
-            FirebaseUtils.logOutUser();
+            logOutUser();
             ActivityUtils.goToMainActivity(ChatsActivity.this);
             return true;
         }

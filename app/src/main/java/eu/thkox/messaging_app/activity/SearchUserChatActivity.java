@@ -1,5 +1,8 @@
 package eu.thkox.messaging_app.activity;
 
+import static eu.thkox.messaging_app.utils.FirebaseUtils.getSignedInUser;
+import static eu.thkox.messaging_app.utils.FirebaseUtils.getTheReferenceUsers;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -54,7 +57,7 @@ public class SearchUserChatActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Check if the user is already logged in
-        FirebaseUser firebaseUser = FirebaseUtils.getSignedInUser();
+        FirebaseUser firebaseUser = getSignedInUser();
         if (firebaseUser == null) {
             ActivityUtils.goToMainActivity(this);
         }
@@ -76,7 +79,7 @@ public class SearchUserChatActivity extends AppCompatActivity {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if(!TextUtils.isEmpty(nickname)){
-            DatabaseReference reference = FirebaseUtils.getTheReferenceUsers();
+            DatabaseReference reference = getTheReferenceUsers();
             reference.orderByChild("nickname").equalTo(nickname).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {

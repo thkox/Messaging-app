@@ -1,5 +1,7 @@
 package eu.thkox.messaging_app.activity;
 
+import static eu.thkox.messaging_app.utils.FirebaseUtils.generateChatId;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -101,17 +103,11 @@ public class ChatActivity extends AppCompatActivity {
         String chatId = generateChatId(message.getSenderId(), message.getReceiverId());
 
         DatabaseReference reference2 = FirebaseDatabase.getInstance().getReference("Chats");
-        // Create a new message entry
         DatabaseReference messageReference = reference2.child(chatId).child("messages").push();
         messageReference.setValue(message);
     }
 
-    private String generateChatId(String user1Id, String user2Id) {
-        List<String> ids = Arrays.asList(user1Id, user2Id);
-        Collections.sort(ids);
-        String concatenatedIds = String.join("_", ids);
-        return Integer.toString(concatenatedIds.hashCode());
-    }
+
 
     private void loadMessagesFromDatabase(String senderId, String receiverId) {
         String chatId = generateChatId(senderId, receiverId);

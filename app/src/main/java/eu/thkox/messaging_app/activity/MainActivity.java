@@ -1,5 +1,7 @@
 package eu.thkox.messaging_app.activity;
 
+import static eu.thkox.messaging_app.utils.FirebaseUtils.getSignedInUser;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -30,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
 
         // Check if the user is already logged in
-        FirebaseUser firebaseUser = FirebaseUtils.getSignedInUser();
+        FirebaseUser firebaseUser = getSignedInUser();
         if (firebaseUser != null) {
             ActivityUtils.goToChatsActivity(this);
         }
