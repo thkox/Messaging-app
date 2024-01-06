@@ -25,6 +25,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import eu.thkox.messaging_app.R;
@@ -39,16 +40,19 @@ public class ChatsActivity extends AppCompatActivity {
     RecyclerView recyclerViewChats;
     ChatRowAdapter adapter;
 
-    List<User> users;
-    List<Message> messages;
+//    List<User> users;
+//    List<Message> messages;
+//
+    HashMap<User, Message> userMessageHashMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chats);
 
-        users = new ArrayList<>();
-        messages = new ArrayList<>();
+//        users = new ArrayList<>();
+//        messages = new ArrayList<>();
+        userMessageHashMap = new HashMap<>();
 
         //Set the layout of the recycler view
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -109,8 +113,8 @@ public class ChatsActivity extends AppCompatActivity {
         referenceUsers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                users.clear();
-                messages.clear();
+//                users.clear();
+//                messages.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     User user = dataSnapshot.getValue(User.class);
                     assert user != null;
@@ -125,18 +129,17 @@ public class ChatsActivity extends AppCompatActivity {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                    Message message = dataSnapshot.getValue(Message.class);
-                                    assert message != null;
                                     // if the chatId exists
                                     if (dataSnapshot.getKey().equals(chatId)) {
                                         // add the user and the last message to the lists
-                                        if(!users.contains(user)){
-                                            users.add(user);
-                                            index = users.indexOf(user);
-                                        } else {
-                                            //get the user index
-                                            index = users.indexOf(user);
-                                        }
+//                                        if(!users.contains(user)){
+//                                            users.add(user);
+//                                            index = users.indexOf(user);
+//                                        } else {
+//                                            //get the user index
+//                                            index = users.indexOf(user);
+//                                        }
+
 
                                         DatabaseReference referenceMessages = getTheReferenceMessages(chatId);
                                         Query query = referenceMessages.orderByChild("timestamp").limitToLast(1);
@@ -145,10 +148,9 @@ public class ChatsActivity extends AppCompatActivity {
                                             if (task.isSuccessful()) {
 
                                                 for (DataSnapshot dataSnapshot1 : task.getResult().getChildren()) {
-                                                    Message message1 = dataSnapshot1.getValue(Message.class);
-                                                    assert message1 != null;
-                                                    messages.add(message1);
-
+                                                    Message message = dataSnapshot1.getValue(Message.class);
+                                                    assert message != null;
+                                                    userMessageHashMap.put(user, message);
                                                 }
                                                 // display the chats
                                                 displayChats();
@@ -178,7 +180,7 @@ public class ChatsActivity extends AppCompatActivity {
 
     private void displayChats(){
         recyclerViewChats.removeAllViews();
-        adapter = new ChatRowAdapter(this, users, messages);
+        adapter = new ChatRowAdapter(this, userMessageHashMap);
         recyclerViewChats.setAdapter(adapter);
     }
 

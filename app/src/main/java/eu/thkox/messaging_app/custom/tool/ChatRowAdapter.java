@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.imageview.ShapeableImageView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,10 +32,16 @@ public class ChatRowAdapter extends RecyclerView.Adapter<ChatRowAdapter.RowViewH
 
     List<Message> messages;
 
-    public ChatRowAdapter (Context context, List<User> users, List<Message> messages) {
+    public ChatRowAdapter (Context context, HashMap<User, Message> userMessageHashMap) {
         this.context = context;
-        this.users = users;
-        this.messages = messages;
+
+        this.users = new ArrayList<>();
+        this.messages = new ArrayList<>();
+
+        for(User user : userMessageHashMap.keySet()) {
+            this.users.add(user);
+            this.messages.add(userMessageHashMap.get(user));
+        }
     }
 
     @NonNull
