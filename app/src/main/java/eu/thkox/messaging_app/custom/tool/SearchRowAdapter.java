@@ -1,6 +1,7 @@
-package eu.thkox.messaging_app;
+package eu.thkox.messaging_app.custom.tool;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class SearchRowAdapter  extends RecyclerView.Adapter<SearchRowAdapter.RowViewHolder> {
+import eu.thkox.messaging_app.activity.ChatActivity;
+import eu.thkox.messaging_app.R;
+import eu.thkox.messaging_app.data.model.User;
+
+public class SearchRowAdapter extends RecyclerView.Adapter<SearchRowAdapter.RowViewHolder> {
 
     Context context;
 
@@ -37,17 +42,26 @@ public class SearchRowAdapter  extends RecyclerView.Adapter<SearchRowAdapter.Row
 
         holder.textViewNickname.setText(user.getNickname());
         holder.textViewEmail.setText(user.getEmail());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ChatActivity.class);
+                intent.putExtra("userid", user.getId());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return users.size();
     }
 
     public class RowViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewNickname;
-        TextView textViewEmail;
+        public TextView textViewNickname;
+        public TextView textViewEmail;
 
         public RowViewHolder(@NonNull View itemView) {
             super(itemView);

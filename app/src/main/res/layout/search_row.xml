@@ -3,29 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         android:layout_width="409dp"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.519">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
-            android:layout_width="411dp"
-            android:layout_height="75dp">
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:padding="12.dp">
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imageViewUser"
+                android:id="@+id/imageViewSender"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.045"
+                app:layout_constraintHorizontal_bias="0.08"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.476"
                 app:shapeAppearanceOverlay="@style/roundedImageView"
                 app:srcCompat="@drawable/ic_launcher_background" />
 
@@ -39,8 +43,8 @@
                 app:layout_constraintBottom_toTopOf="@+id/textViewEmail"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.034"
-                app:layout_constraintStart_toEndOf="@+id/imageViewUser"
-                app:layout_constraintTop_toTopOf="@+id/imageViewUser" />
+                app:layout_constraintStart_toEndOf="@+id/imageViewSender"
+                app:layout_constraintTop_toTopOf="@+id/imageViewSender" />
 
             <TextView
                 android:id="@+id/textViewEmail"
@@ -49,11 +53,11 @@
                 android:text="@string/email"
                 android:textSize="14sp"
                 android:textStyle="italic"
-                app:layout_constraintBottom_toBottomOf="@+id/imageViewUser"
+                app:layout_constraintBottom_toBottomOf="@+id/imageViewSender"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/textViewNickname"
-                app:layout_constraintTop_toTopOf="@+id/imageViewUser"
+                app:layout_constraintTop_toTopOf="@+id/imageViewSender"
                 app:layout_constraintVertical_bias="0.78" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,9 +1,7 @@
-package eu.thkox.messaging_app;
+package eu.thkox.messaging_app.activity;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,24 +9,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.HashMap;
+import eu.thkox.messaging_app.R;
+import eu.thkox.messaging_app.data.model.User;
+import eu.thkox.messaging_app.utils.ActivityUtils;
 
 public class SignUpActivity extends AppCompatActivity {
-
     EditText editTextNickname, editTextEmail, editTextPassword;
-
     TextView textViewSignUpError;
     Button buttonSignUp;
 
-    FirebaseAuth auth;
     DatabaseReference reference;
 
     @Override
@@ -40,12 +34,9 @@ public class SignUpActivity extends AppCompatActivity {
         editTextEmail = findViewById(R.id.editTextSignUpTextEmailAddress);
         editTextPassword = findViewById(R.id.editTextSignUpTextPassword);
         textViewSignUpError = findViewById(R.id.textViewSignInError);
-
-        textViewSignUpError.setVisibility(TextView.INVISIBLE);
-
         buttonSignUp = findViewById(R.id.buttonSignUp);
 
-        auth = FirebaseAuth.getInstance();
+        textViewSignUpError.setVisibility(TextView.INVISIBLE);
     }
 
     public void signUpUser(View view) {
@@ -65,6 +56,8 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void registerUser(String nickname, String email, String password) {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if(task.isSuccessful()){
                 FirebaseUser firebaseUser = auth.getCurrentUser();
@@ -73,18 +66,11 @@ public class SignUpActivity extends AppCompatActivity {
 
                 reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
-                HashMap<String, String> hashMap = new HashMap<>();
-                hashMap.put("id", userid);
-                hashMap.put("nickname", nickname);
-                hashMap.put("email", email);
-                hashMap.put("imageURL", "default");
+                User newUser = new User(email, nickname, userid, "default");
 
-                reference.setValue(hashMap).addOnCompleteListener(task1 -> {
+                reference.setValue(newUser).addOnCompleteListener(task1 -> {
                     if(task1.isSuccessful()){
-                        Intent intent = new Intent(SignUpActivity.this, ChatsActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                        finish();
+                        ActivityUtils.goToChatsActivity(SignUpActivity.this);
                     }
                 });
             }else{
