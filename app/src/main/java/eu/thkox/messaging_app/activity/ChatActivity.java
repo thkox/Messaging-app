@@ -1,6 +1,10 @@
 package eu.thkox.messaging_app.activity;
 
 import static eu.thkox.messaging_app.utils.FirebaseUtils.generateChatId;
+import static eu.thkox.messaging_app.utils.FirebaseUtils.getTheReferenceChat;
+import static eu.thkox.messaging_app.utils.FirebaseUtils.getTheReferenceChats;
+import static eu.thkox.messaging_app.utils.FirebaseUtils.getTheReferenceMessages;
+import static eu.thkox.messaging_app.utils.FirebaseUtils.getTheReferenceReceiver;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -63,11 +67,10 @@ public class ChatActivity extends AppCompatActivity {
         linearLayoutManager.setStackFromEnd(true); // TO BE CHECKED
         recyclerView.setLayoutManager(linearLayoutManager);
 
-
         Intent intent = getIntent();
         String userId = intent.getStringExtra("userid");
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        reference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
+        reference = getTheReferenceReceiver(userId);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -86,7 +89,6 @@ public class ChatActivity extends AppCompatActivity {
         chatMessages = new ArrayList<>();
     }
 
-
     public void sendMessageToDatabase(View view) {
         String text = messageText.getText().toString();
         int timestamp = (int) (System.currentTimeMillis() / 1000);
@@ -102,18 +104,15 @@ public class ChatActivity extends AppCompatActivity {
 
         String chatId = generateChatId(message.getSenderId(), message.getReceiverId());
 
-        DatabaseReference reference2 = FirebaseDatabase.getInstance().getReference("Chats");
-        DatabaseReference messageReference = reference2.child(chatId).child("messages").push();
+        DatabaseReference messageReference = getTheReferenceMessages(chatId).push();
         messageReference.setValue(message);
     }
-
-
 
     private void loadMessagesFromDatabase(String senderId, String receiverId) {
         String chatId = generateChatId(senderId, receiverId);
 
         //get the reference of the database
-        reference = FirebaseDatabase.getInstance().getReference("Chats").child(chatId).child("messages");
+        reference = getTheReferenceMessages(chatId);
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -130,7 +129,6 @@ public class ChatActivity extends AppCompatActivity {
                     recyclerView.setAdapter(messageAdapter);
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 

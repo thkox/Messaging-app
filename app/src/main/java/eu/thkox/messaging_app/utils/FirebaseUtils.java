@@ -33,6 +33,22 @@ public class FirebaseUtils {
         return FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
     }
 
+    public static DatabaseReference getTheReferenceReceiver(String userId) {
+        return FirebaseDatabase.getInstance().getReference("Users").child(userId);
+    }
+
+    public static DatabaseReference getTheReferenceChats() {
+        return FirebaseDatabase.getInstance().getReference("Chats");
+    }
+
+    public static DatabaseReference getTheReferenceChat(String chatId) {
+        return getTheReferenceChats().child(chatId);
+    }
+
+    public static DatabaseReference getTheReferenceMessages(String chatId) {
+        return getTheReferenceChat(chatId).child("messages");
+    }
+
     public static void registerUser(String nickname, String email, String password) {
         FirebaseAuth auth = FirebaseAuth.getInstance();
     }
