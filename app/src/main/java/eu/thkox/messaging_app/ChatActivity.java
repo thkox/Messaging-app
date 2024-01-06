@@ -35,7 +35,6 @@ import eu.thkox.messaging_app.data.model.User;
 public class ChatActivity extends AppCompatActivity {
     FirebaseUser firebaseUser;
     DatabaseReference reference;
-    Toolbar toolbar;
     Intent intent;
     EditText messageText;
     RecyclerView recyclerView;
@@ -53,7 +52,7 @@ public class ChatActivity extends AppCompatActivity {
         sendButton = findViewById(R.id.floatingActionButtonSendMessage);
 
         // set the toolbar
-        toolbar = findViewById(R.id.app_toolbar_chat);
+        Toolbar toolbar = findViewById(R.id.app_toolbar_chat);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
