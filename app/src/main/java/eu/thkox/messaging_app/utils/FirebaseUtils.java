@@ -49,9 +49,11 @@ public class FirebaseUtils {
         return getTheReferenceChat(chatId).child("messages");
     }
 
-    public static void registerUser(String nickname, String email, String password) {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
+    public static DatabaseReference getTheReferenceLastMessage(String chatId) {
+        return (DatabaseReference) getTheReferenceMessages(chatId).orderByChild("timestamp").limitToLast(1);
     }
+
+
 
     public static String generateChatId(String user1Id, String user2Id) {
         List<String> ids = Arrays.asList(user1Id, user2Id);

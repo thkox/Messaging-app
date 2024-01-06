@@ -34,7 +34,6 @@ import java.util.List;
 
 import eu.thkox.messaging_app.R;
 import eu.thkox.messaging_app.custom.tool.MessageAdapter;
-import eu.thkox.messaging_app.data.model.Chat;
 import eu.thkox.messaging_app.data.model.Message;
 import eu.thkox.messaging_app.data.model.User;
 import eu.thkox.messaging_app.utils.ActivityUtils;

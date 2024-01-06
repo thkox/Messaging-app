@@ -2,10 +2,12 @@ package eu.thkox.messaging_app.utils;
 
 import static androidx.core.content.ContextCompat.startActivity;
 
+import android.content.Context;
 import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import eu.thkox.messaging_app.activity.ChatActivity;
 import eu.thkox.messaging_app.activity.ChatsActivity;
 import eu.thkox.messaging_app.activity.MainActivity;
 import eu.thkox.messaging_app.activity.SearchUserChatActivity;
@@ -43,6 +45,12 @@ public class ActivityUtils {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent);
         activity.finish();
+    }
+
+    public static void goToChatActivity(Context context, String userId) {
+        Intent intent = new Intent(context, ChatActivity.class);
+        intent.putExtra("userid", userId);
+        context.startActivity(intent);
     }
 
 }

@@ -1,6 +1,9 @@
 package eu.thkox.messaging_app.custom.tool;
 
+import static eu.thkox.messaging_app.utils.ActivityUtils.goToChatActivity;
+
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,18 +15,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.List;
+import java.util.Objects;
 
 import eu.thkox.messaging_app.R;
-import eu.thkox.messaging_app.data.model.Chat;
+
+import eu.thkox.messaging_app.data.model.Message;
+import eu.thkox.messaging_app.data.model.User;
 
 public class ChatRowAdapter extends RecyclerView.Adapter<ChatRowAdapter.RowViewHolder> {
 
     Context context;
 
-    List<Chat> chats;
-    public ChatRowAdapter (Context context, List<Chat> chats) {
+    List<User> users;
+
+    List<Message> messages;
+
+    public ChatRowAdapter (Context context, List<User> users, List<Message> messages) {
         this.context = context;
-        this.chats = chats;
+        this.users = users;
+        this.messages = messages;
     }
 
     @NonNull
@@ -37,35 +47,38 @@ public class ChatRowAdapter extends RecyclerView.Adapter<ChatRowAdapter.RowViewH
     @Override
     public void onBindViewHolder(@NonNull RowViewHolder holder, int position) {
         //position of the list of chats
-        Chat chat = chats.get(position);
-        // get the last message from the list of messages
-        //String message = chat.getText();
+        User user = users.get(position);
+        Message message = messages.get(position);
 
-        //set the image of the user
-        // holder.imageViewUser.setImageResource(chats.get(position).getUser().getImage()); -> to be implemented
+        holder.textViewNickname.setText(user.getNickname());
+        if (Objects.equals(user.getId(), message.getSenderId())) {
+            holder.textViewLastMessage.setText(String.format("You: %s", message.getText()));
+        } else {
+            holder.textViewLastMessage.setText(String.format("%s: %s", user.getNickname(), message.getText()));
+        }
 
-        //holder.textViewNickname.setText(.getSenderId());
-        //get the last message from the list of messages
-        //holder.textViewMessage.setText(message.getText());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToChatActivity(context, user.getId());
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return chats.size();
+        return users.size();
     }
 
     public class RowViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewNickname;
-        TextView textViewMessage;
-
-        ShapeableImageView imageViewUser;
+        public TextView textViewNickname;
+        public TextView textViewLastMessage;
 
         public RowViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewNickname = itemView.findViewById(R.id.textViewNickname);
-            textViewMessage = itemView.findViewById(R.id.textViewEmail);
-            imageViewUser = itemView.findViewById(R.id.imageViewSender);
+            textViewLastMessage = itemView.findViewById(R.id.textViewLastMessage);
         }
     }
 }

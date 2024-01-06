@@ -15,7 +15,6 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.List;
 
 import eu.thkox.messaging_app.R;
-import eu.thkox.messaging_app.data.model.Chat;
 import eu.thkox.messaging_app.data.model.Message;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.RowViewHolder> {
