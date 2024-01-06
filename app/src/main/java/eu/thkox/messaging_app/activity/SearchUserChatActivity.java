@@ -65,7 +65,7 @@ public class SearchUserChatActivity extends AppCompatActivity {
 
         if (id == android.R.id.home) {
             // Handle the back button in the toolbar
-            launchChatsActivity(); // This will finish the current activity and go back
+            ActivityUtils.goToChatsActivity(SearchUserChatActivity.this);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -106,9 +106,5 @@ public class SearchUserChatActivity extends AppCompatActivity {
     private void displayUsers(){
         adapter = new SearchRowAdapter(this, users);
         recyclerViewUsers.setAdapter(adapter);
-    }
-
-    private void launchChatsActivity() {
-        ActivityUtils.goToChatsActivity(SearchUserChatActivity.this);
     }
 }

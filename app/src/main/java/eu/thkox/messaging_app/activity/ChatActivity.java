@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
@@ -27,16 +28,16 @@ import java.util.List;
 
 import eu.thkox.messaging_app.R;
 import eu.thkox.messaging_app.custom.tool.MessageAdapter;
+import eu.thkox.messaging_app.data.model.Chat;
 import eu.thkox.messaging_app.data.model.Message;
 import eu.thkox.messaging_app.data.model.User;
+import eu.thkox.messaging_app.utils.ActivityUtils;
 
 public class ChatActivity extends AppCompatActivity {
     FirebaseUser firebaseUser;
     DatabaseReference reference;
-    Intent intent;
     EditText messageText;
     RecyclerView recyclerView;
-    FloatingActionButton sendButton;
     MessageAdapter messageAdapter;
     List<Message> chatMessages;
     User receiver;
@@ -47,7 +48,6 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
 
         messageText = findViewById(R.id.editTextMessageText);
-        sendButton = findViewById(R.id.floatingActionButtonSendMessage);
 
         // set the toolbar
         Toolbar toolbar = findViewById(R.id.app_toolbar_chat);
@@ -62,7 +62,7 @@ public class ChatActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
 
 
-        intent = getIntent();
+        Intent intent = getIntent();
         String userId = intent.getStringExtra("userid");
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
@@ -140,6 +140,17 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            // Handle the back button in the toolbar
+            ActivityUtils.goToChatsActivity(ChatActivity.this);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
