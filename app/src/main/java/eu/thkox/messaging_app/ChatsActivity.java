@@ -31,19 +31,11 @@ public class ChatsActivity extends AppCompatActivity {
     RecyclerView recyclerViewChats;
     ChatRowAdapter adapter;
     List<Chat> chats;
-    FirebaseAuth auth;
-    FirebaseUser currentUser;
-    DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chats);
-
-        //Firebase
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        currentUser = auth.getCurrentUser();
-        reference = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
 
         // Set the recycler view
         recyclerViewChats = findViewById(R.id.recyclerViewChats);
@@ -53,7 +45,9 @@ public class ChatsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
 
-        reference.addValueEventListener(new ValueEventListener() {
+        //Firebase
+        DatabaseReference referenceUser = FirebaseUtils.getTheReferenceUser();
+        referenceUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
@@ -80,9 +74,7 @@ public class ChatsActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_logout) {
-            // Perform logout
-            FirebaseAuth auth = FirebaseAuth.getInstance();
-            auth.signOut();
+            FirebaseUtils.logOutUser();
             ActivityUtils.goToMainActivity(ChatsActivity.this);
             return true;
         }

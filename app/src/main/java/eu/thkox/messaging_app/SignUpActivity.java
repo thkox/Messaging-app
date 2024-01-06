@@ -71,7 +71,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                 reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
-                User newUser = new User(userid, nickname, email, "default");
+                User newUser = new User(email, nickname, userid, "default");
 
                 reference.setValue(newUser).addOnCompleteListener(task1 -> {
                     if(task1.isSuccessful()){

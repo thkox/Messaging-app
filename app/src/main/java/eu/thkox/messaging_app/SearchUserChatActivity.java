@@ -32,31 +32,31 @@ public class SearchUserChatActivity extends AppCompatActivity {
     RecyclerView recyclerViewUsers;
     SearchRowAdapter adapter;
     List<User> users;
-    DatabaseReference reference;
     EditText searchUser;
-    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_user_chat);
 
         users = new ArrayList<>();
-        recyclerViewUsers = findViewById(R.id.recyclerViewUsers);
         searchUser = findViewById(R.id.editTextSearchText);
-
 
         //Set the layout of the recycler view
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerViewUsers = findViewById(R.id.recyclerViewUsers);
         recyclerViewUsers.setLayoutManager(layoutManager);
 
         // Set the toolbar
-        toolbar = findViewById(R.id.app_toolbar_search);
+        Toolbar toolbar = findViewById(R.id.app_toolbar_search);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.search_chat_or_user);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // Set the firebase reference
-        reference = FirebaseDatabase.getInstance().getReference("Users");
+        // Check if the user is already logged in
+        FirebaseUser firebaseUser = FirebaseUtils.getSignedInUser();
+        if (firebaseUser == null) {
+            ActivityUtils.goToMainActivity(this);
+        }
     }
 
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -75,6 +75,7 @@ public class SearchUserChatActivity extends AppCompatActivity {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if(!TextUtils.isEmpty(nickname)){
+            DatabaseReference reference = FirebaseUtils.getTheReferenceUsers();
             reference.orderByChild("nickname").equalTo(nickname).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -107,9 +108,6 @@ public class SearchUserChatActivity extends AppCompatActivity {
     }
 
     private void launchChatsActivity() {
-        Intent intent = new Intent(SearchUserChatActivity.this, ChatsActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();
+        ActivityUtils.goToChatsActivity(SearchUserChatActivity.this);
     }
 }

@@ -20,6 +20,15 @@ public class FirebaseUtils {
         FirebaseAuth.getInstance().signOut();
     }
 
+    public static DatabaseReference getTheReferenceUsers() {
+        return FirebaseDatabase.getInstance().getReference("Users");
+    }
+
+    public static DatabaseReference getTheReferenceUser() {
+        FirebaseUser currentUser = FirebaseUtils.getSignedInUser();
+        return FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
+    }
+
     public static void registerUser(String nickname, String email, String password) {
         FirebaseAuth auth = FirebaseAuth.getInstance();
     }
