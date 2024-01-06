@@ -1,10 +1,16 @@
-package eu.thkox.messaging_app;
+package eu.thkox.messaging_app.utils;
 
 import static androidx.core.content.ContextCompat.startActivity;
 
 import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import eu.thkox.messaging_app.activity.ChatsActivity;
+import eu.thkox.messaging_app.activity.MainActivity;
+import eu.thkox.messaging_app.activity.SearchUserChatActivity;
+import eu.thkox.messaging_app.activity.SignInActivity;
+import eu.thkox.messaging_app.activity.SignUpActivity;
 
 public class ActivityUtils {
 
