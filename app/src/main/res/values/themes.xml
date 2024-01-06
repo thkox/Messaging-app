@@ -8,6 +8,6 @@
     <style name="Theme.Messagingapp" parent="Base.Theme.Messagingapp" />
     <style name="roundedImageView" parent="">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">30dp</item>
+        <item name="cornerSize">20dp</item>
     </style>
 </resources>

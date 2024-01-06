@@ -94,9 +94,7 @@ public class ChatsActivity extends AppCompatActivity {
     }
 
     private void loadChats(){
-        // reference the "Users"
         DatabaseReference referenceUsers = getTheReferenceUsers();
-        // for every user in the "Users", generate a chatId with the current user and compare it with the chatId that exists in the "Chats"
         referenceUsers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -104,23 +102,16 @@ public class ChatsActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     User user = dataSnapshot.getValue(User.class);
                     assert user != null;
-                    // if the user is not the current user
                     if (!user.getId().equals(FirebaseUtils.getSignedInUser().getUid())) {
-                        // generate the chatId
                         String chatId = FirebaseUtils.generateChatId(FirebaseUtils.getSignedInUser().getUid(), user.getId());
-                        // reference the "Chats"
                         DatabaseReference referenceChats = FirebaseUtils.getTheReferenceChats();
-                        // for every chat in the "Chats", check if the chatId exists
                         referenceChats.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                    // if the chatId exists
                                     if (dataSnapshot.getKey().equals(chatId)) {
-
                                         DatabaseReference referenceMessages = getTheReferenceMessages(chatId);
                                         Query query = referenceMessages.orderByChild("timestamp").limitToLast(1);
-
                                         query.get().addOnCompleteListener(task -> {
                                             if (task.isSuccessful()) {
 
@@ -129,7 +120,6 @@ public class ChatsActivity extends AppCompatActivity {
                                                     assert message != null;
                                                     userMessageHashMap.put(user, message);
                                                 }
-                                                // display the chats
                                                 displayChats();
                                             }
                                         });
@@ -144,7 +134,6 @@ public class ChatsActivity extends AppCompatActivity {
                     }
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
