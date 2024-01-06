@@ -1,5 +1,7 @@
 package eu.thkox.messaging_app.data.model;
 
+import androidx.annotation.Nullable;
+
 public class User {
     String email;
     String nickname;
@@ -38,5 +40,20 @@ public class User {
     }
     public void setId(String id) {
         this.id = id;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (obj instanceof User) {
+            User user = (User) obj;
+            return this.id.equals(user.id);
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return this.id.hashCode();
     }
 }
