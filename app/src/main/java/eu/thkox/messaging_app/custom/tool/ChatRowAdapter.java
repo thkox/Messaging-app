@@ -60,9 +60,9 @@ public class ChatRowAdapter extends RecyclerView.Adapter<ChatRowAdapter.RowViewH
 
         holder.textViewNickname.setText(user.getNickname());
         if (Objects.equals(user.getId(), message.getSenderId())) {
-            holder.textViewLastMessage.setText(String.format("You: %s", message.getText()));
-        } else {
             holder.textViewLastMessage.setText(String.format("%s: %s", user.getNickname(), message.getText()));
+        } else {
+            holder.textViewLastMessage.setText(String.format("You: %s", message.getText()));
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
