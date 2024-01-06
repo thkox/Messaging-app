@@ -1,59 +1,36 @@
 package eu.thkox.messaging_app.data.model;
 
+import java.util.List;
+
 public class Chat {
 
-    String senderId;
-    String receiverId;
-    String text;
-
-    int timestamp;
-
+    String user1;
+    String user2;
+    List<Message> messages;
 
     public Chat() {
     }
-
-    public int getTimestamp() {
-        return timestamp;
+    public Chat(String user1, String user2, List<Message> messages) {
+        this.user1 = user1;
+        this.user2 = user2;
+        this.messages = messages;
     }
-
-    public void setTimestamp(int timestamp) {
-        this.timestamp = timestamp;
+    public String getUser1() {
+        return user1;
     }
-
-    public Chat(String senderId, String receiverId, String text, int timestamp) {
-        this.senderId = senderId;
-        this.receiverId = receiverId;
-        this.text = text;
-        this.timestamp = timestamp;
+    public void setUser1(String user1) {
+        this.user1 = user1;
     }
-
-    public Chat(String senderId, String receiverId, String message) {
-        this.senderId = senderId;
-        this.receiverId = receiverId;
-        this.text = message;
+    public String getUser2() {
+        return user2;
     }
-
-    public String getSenderId() {
-        return senderId;
+    public void setUser2(String user2) {
+        this.user2 = user2;
     }
-
-    public void setSenderId(String senderId) {
-        this.senderId = senderId;
+    public List<Message> getMessages() {
+        return messages;
     }
-
-    public String getReceiverId() {
-        return receiverId;
-    }
-
-    public void setReceiverId(String receiverId) {
-        this.receiverId = receiverId;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
     }
 }

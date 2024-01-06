@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import eu.thkox.messaging_app.ChatActivity;
+import eu.thkox.messaging_app.activity.ChatActivity;
 import eu.thkox.messaging_app.R;
 import eu.thkox.messaging_app.data.model.User;
 

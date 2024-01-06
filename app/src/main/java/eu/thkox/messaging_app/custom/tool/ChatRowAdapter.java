@@ -39,7 +39,7 @@ public class ChatRowAdapter extends RecyclerView.Adapter<ChatRowAdapter.RowViewH
         //position of the list of chats
         Chat chat = chats.get(position);
         // get the last message from the list of messages
-        String message = chat.getText();
+        //String message = chat.getText();
 
         //set the image of the user
         // holder.imageViewUser.setImageResource(chats.get(position).getUser().getImage()); -> to be implemented
