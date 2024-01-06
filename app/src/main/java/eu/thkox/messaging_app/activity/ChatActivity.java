@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -51,6 +52,9 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        Window window = getWindow();
+        window.setStatusBarColor(getResources().getColor(R.color.toolbar_color));
 
         messageText = findViewById(R.id.editTextMessageText);
 

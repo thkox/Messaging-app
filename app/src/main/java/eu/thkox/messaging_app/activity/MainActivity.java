@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseUser;
@@ -25,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
 
         buttonLogIn = findViewById(R.id.buttonLogIn);
         buttonRegister = findViewById(R.id.buttonRegister);
+
+        Window window = getWindow();
+        window.setStatusBarColor(getResources().getColor(R.color.app_background_color));
     }
 
     @Override

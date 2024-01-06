@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -61,6 +62,9 @@ public class SearchUserChatActivity extends AppCompatActivity {
         if (firebaseUser == null) {
             ActivityUtils.goToMainActivity(this);
         }
+
+        Window window = getWindow();
+        window.setStatusBarColor(getResources().getColor(R.color.toolbar_color));
     }
 
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

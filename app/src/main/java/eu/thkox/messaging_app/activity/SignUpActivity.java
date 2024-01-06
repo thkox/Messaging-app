@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -37,6 +38,9 @@ public class SignUpActivity extends AppCompatActivity {
         buttonSignUp = findViewById(R.id.buttonSignUp);
 
         textViewSignUpError.setVisibility(TextView.INVISIBLE);
+
+        Window window = getWindow();
+        window.setStatusBarColor(getResources().getColor(R.color.app_background_color));
     }
 
     public void signUpUser(View view) {
@@ -80,4 +84,7 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
+    public void goToMainActivity(View view) {
+        ActivityUtils.goToMainActivity(this);
+    }
 }

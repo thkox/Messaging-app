@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,6 +45,9 @@ public class ChatsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chats);
 
         userMessageHashMap = new HashMap<>();
+
+        Window window = getWindow();
+        window.setStatusBarColor(getResources().getColor(R.color.toolbar_color));
 
         //Set the layout of the recycler view
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);

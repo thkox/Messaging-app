@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -32,6 +33,9 @@ public class SignInActivity extends AppCompatActivity {
         textViewSignInError.setVisibility(TextView.INVISIBLE);
 
         buttonSignIn = findViewById(R.id.buttonSignIn);
+
+        Window window = getWindow();
+        window.setStatusBarColor(getResources().getColor(R.color.app_background_color));
     }
 
     public void signInUser(View view) {
@@ -57,5 +61,9 @@ public class SignInActivity extends AppCompatActivity {
                 textViewSignInError.setText(R.string.you_have_entered_an_invalid_email_or_password);
             }
         });
+    }
+
+    public void goToMainActivity(View view) {
+        ActivityUtils.goToMainActivity(this);
     }
 }
