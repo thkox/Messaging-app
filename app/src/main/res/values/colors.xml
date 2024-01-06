@@ -2,9 +2,17 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="app_background_color">#0d33a2</color>
+    <color name="app_background_color">#2A479D</color>
+    <color name="hint_color">#88AFCA</color>
     <color name="title_color">#5299ff</color>
+    <color name="tab_text_color">#FFFFFF</color>
+    <color name="button_color">#5F83EB</color>
+    <color name="toolbar_color">#6987DF</color>
+    <color name="chat_background_color">#2A479D</color>
     <color name="message_text_color">#e7f5ff</color>
-    <color name="message_background_color">#2b70ff</color>
+    <color name="message_sender_background_color">#2b70ff</color>
+    <color name="message_receiver_background_color">#718AD3</color>
+    <color name="field_color">#407BAB</color>
+    <color name="error_color">#D04747</color>
 
 </resources>
